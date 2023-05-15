@@ -1,0 +1,21 @@
+{
+    "name": "duration/duration-php",
+    "description": "Time duration class",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^10.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Duration\\": "src/Duration"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniel Berstein",
+            "email": "daniel@basegeo.com"
+        }
+    ],
+    "require": {}
+}
