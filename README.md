@@ -20,7 +20,7 @@ Duration is a class to abstract time durations
     Creates new instance by parsing string like [Go](https://pkg.go.dev/time#Duration)
 
 
-- $d = new Duration(`nanopseconds`)
+- $d = new Duration(`nanoseconds`)
 
     Creates new instance
 
