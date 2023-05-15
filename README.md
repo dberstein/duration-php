@@ -40,7 +40,7 @@ Duration is a class to abstract time durations
     Rounds to nearest `duration`
 
 
-- $d->abs() -> float:
+- $d->abs() -> Duration:
 
     Absolute duration
 
