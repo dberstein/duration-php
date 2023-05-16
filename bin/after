@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+include $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
+
+use Duration\Duration;
+
+/**
+ * @param Duration $d
+ * @return array|bool
+ */
+function delay(array $argv, Duration $d): bool
+{
+    if ($d->nanoseconds() < 0) {
+        fwrite(STDERR, "duration must be greater than zero, got: {$argv[1]} ({$d})" . PHP_EOL);
+        return false;
+    }
+    if ($d > Duration::parse("1m")) {
+        fwrite(STDERR, "duration must be less than 1m, got: {$argv[1]} ({$d})" . PHP_EOL);
+        return false;
+    }
+
+    $seconds = intval($d->seconds());
+    $d->sub(Duration::parse("{$seconds}s"));
+    $nanoseconds = $d->nanoseconds();
+    time_nanosleep($seconds, $nanoseconds);
+    return true;
+}
+
+function execute(array $cmd): int
+{
+    $descriptor_spec = [0 => ["pipe", "r"], 1 => ["pipe", "w"], 2 => ["pipe", "w"]];
+    $process = proc_open($cmd, $descriptor_spec, $pipes);
+    if (is_resource($process)) {
+        if (!posix_isatty(STDIN)) {
+            fwrite($pipes[0], stream_get_contents(STDIN));
+        }
+        fwrite(STDOUT, stream_get_contents($pipes[1]));
+        fwrite(STDERR, stream_get_contents($pipes[2]));
+        return proc_close($process);
+    }
+}
+
+switch (count($argv)) {
+    case 1:
+        fwrite(STDERR, "missing duration and command" . PHP_EOL);
+        exit(1);
+    case 2:
+        fwrite(STDERR, "missing command" . PHP_EOL);
+        exit(1);
+    default:
+        $d = Duration::parse($argv[1]);
+        if (!delay($argv, $d)) {
+            exit(1);
+        }
+        $cmd = array_slice($argv, 2);
+        exit(execute($cmd));
+}

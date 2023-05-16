@@ -93,12 +93,13 @@ class Duration
     static public function parse(string $s): Duration
     {
         $n = 0;
-        if (preg_match_all("(([+\-]?\d+(\.\d+)?)(ns|us|ms|s|m|h))", trim($s), $matches)) {
-            foreach ($matches[1] as $key => $value) {
-                $unit = $matches[3][$key];
+        if (preg_match_all("(([+\-])?(\d+(\.\d+)?)(ns|us|ms|s|m|h))", trim($s), $matches)) {
+            $neg = $matches[1][0] == "-";
+            foreach ($matches[2] as $key => $value) {
+                $unit = $matches[4][$key];
                 $n += $value * self::$unitMap[$unit];
             }
-            return new Duration($n);
+            return new Duration($n * ($neg ? -1 : 1));
         }
         throw new InvalidArgumentException("bad duration format");
     }
@@ -115,14 +116,13 @@ class Duration
         } else {
             $buf[] = ($n > 0) ? "+" : "-";
         }
-
         foreach (array_reverse(self::$unitMap, true) as $key => $value) {
-            if ($n < $value) {
+            if (abs($n) < $value) {
                 continue;
             }
             $q = intdiv($n, $value);
             $n -= $q * $value;
-            $buf[] = sprintf("%d%s", $q, $key);
+            $buf[] = sprintf("%d%s", abs($q), $key);
         }
         return implode("", $buf);
     }
@@ -173,6 +173,4 @@ class Duration
     }
 }
 
-//$str = trim(fgets(STDIN));
-//die(Duration::parse($str));
 
