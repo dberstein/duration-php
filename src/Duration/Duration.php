@@ -117,7 +117,7 @@ class Duration
         }
 
         foreach (array_reverse(self::$unitMap, true) as $key => $value) {
-            if ($n <= $value) {
+            if ($n < $value) {
                 continue;
             }
             $q = intdiv($n, $value);
@@ -175,3 +175,4 @@ class Duration
 
 //$str = trim(fgets(STDIN));
 //die(Duration::parse($str));
+
