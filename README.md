@@ -8,6 +8,7 @@ Duration is a class to abstract time durations
 
 ## Usage
 
+    require __DIR__ . '/vendor/autoload.php';
     use Duration\Duration;
     $d = Duration::parse("1h59m59s999ms999us999ns");
     $d->add(Duration::parse("1ns"));
