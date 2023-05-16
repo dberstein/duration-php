@@ -17,5 +17,7 @@
             "email": "daniel@basegeo.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=8.2"
+    }
 }
