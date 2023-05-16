@@ -14,7 +14,7 @@ class DurationTest extends TestCase
     static protected array $cases = [
         "+1m6s833ms500us33ns" => 66833500033,
         "     +333ms500us33ns" => 333500033,
-        "      +1h1m1ms1000ns" => 3660001001000,
+        "       +1h1m1ms999ns" => 3660001000999,
         "           +2h6m25ns" => 7560000000025,
         "              +2h30m" => 9000000000000,
         "            +58m33ns" => 3480000000033,
