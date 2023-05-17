@@ -16,37 +16,55 @@ Duration is a class to abstract time durations
 
 ## Methods
 
-    $d = Duration::parse(`string`)
+- **Duration::parse()**: creates new instance by parsing string like [Go](https://pkg.go.dev/time#Duration)
 
-Creates new instance by parsing string like [Go](https://pkg.go.dev/time#Duration)
 
-    $d = new Duration(`nanoseconds`)
+    $d = Duration::parse("+1h59m59s999ms999us999ns")
 
-Creates new instance
 
-    $d->add(`duration`) -> Duration
+- **new / constructor**: creates new instance
 
-Adds `duration` to `$d`
 
-    $d->sub(`duration`) -> Duration
+    $d = new Duration([nanoseconds=0])
 
-Subtracts `duration` from `$d`
 
-    $d->truncate(`duration`) -> Duration
+- **add(Duration)**: adds duration to `$d`
 
-Rounds to nearest `duration`
+
+    $q = Duration::parse("1m");
+    $d->add($q) -> Duration
+
+
+- **sub(Duration)**: subtracts duration from `$d`
+
+
+    $q = Duration::parse("1m");
+    $d->sub($q) -> Duration
+
+- **truncate(Duration)**: rounds to nearest duration
+
+
+    $q = Duration::parse("5m");
+    $d->truncate($q) -> Duration
+
+
+- **abs()**: returns absolute duration
+
+    Note: same as [Go's time#Duration.Abs()](https://pkg.go.dev/time#Duration.Abs), abs of duration for `PHP_MIN_INT` returns duration for `PHP_MAX_INT` and viceversa.
 
 
     $d->abs() -> Duration
 
-Returns absolute duration
 
 ## Time duration properties
-- `$d->nanoseconds()` -> int
-- `$d->microseconds()` -> float
-- `$d->seconds()` -> float
-- `$d->minutes()` -> float
-- `$d->hours()` -> float
+
+| method               | returns |
+|----------------------|---------|
+| `$d->hours()`        | float   |
+| `$d->minutes()`      | float   |
+| `$d->seconds()`      | float   |
+| `$d->microseconds()` | float   |
+| `$d->nanoseconds()`  | int     |
 
 ## Makefile
 
