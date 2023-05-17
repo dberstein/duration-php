@@ -14,7 +14,7 @@
     "authors": [
         {
             "name": "Daniel Berstein",
-            "email": "daniel@basegeo.com"
+            "email": "daniel+packagist@basegeo.com"
         }
     ],
     "require": {
