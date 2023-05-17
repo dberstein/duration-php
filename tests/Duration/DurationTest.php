@@ -25,6 +25,26 @@ class DurationTest extends TestCase
         " -1m6s833ms500us33ns" => -66833500033,
     ];
 
+    public function test_constructor()
+    {
+        $d = new Duration();
+        $this->assertEquals(0, $d->nanoseconds());
+
+        $d = new Duration(100);
+        $this->assertEquals(100, $d->nanoseconds());
+
+        foreach ([
+            Duration::Nanosecond => 1001,
+            Duration::Microsecond => 1001000,
+            Duration::Millisecond => 1001000000,
+            Duration::Second => 1001000000000,
+            Duration::Minute => 60060000000000,
+            Duration::Hour => 3603600000000000,
+                 ] as $unit => $expected) {
+            $d = new Duration(1001, $unit);
+            $this->assertEquals($expected, $d->nanoseconds(), "expected {$expected} but got {$d->nanoseconds()}");
+        }
+    }
 
     public function testParse()
     {

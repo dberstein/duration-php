@@ -32,10 +32,11 @@ class Duration
 
     /**
      * @param int $n
+     * @param int $unit
      */
-    public function __construct(int $n = 0)
+    public function __construct(int $n = 0, int $unit = 1)
     {
-        $this->n = $n;
+        $this->n = $n * $unit;
     }
 
     /**
