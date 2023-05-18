@@ -25,8 +25,19 @@ Duration is a class to abstract time durations
 - **new / constructor**: creates new instance
 
 
-    $d = new Duration([nanoseconds=0])
+    $d = new Duration([$n=0, [$multiplier=1])
+    $d = new Duration(); // 0 nanoseconds
+    $d = new Duration(1); // 1 nanosecond
+    $d = new Duration(1, Duration::Millisecond); // 1000000 nanoseconds
 
+| *Convenience multipliers* | *Example*                                | *Nanoseconds* |
+|---------------------------|------------------------------------------|---------------|
+| Duration::Nanosecond      | `new Duration(1, Duration::Nanosecond)`  | 1             |
+| Duration::Microsecond     | `new Duration(1, Duration::Microsecond)` | 1000          |
+| Duration::Millisecond     | `new Duration(1, Duration::Millisecond)` | 1000000       |
+| Duration::Second          | `new Duration(1, Duration::Second)`      | 1000000000    |
+| Duration::Minute          | `new Duration(1, Duration::Minute)`      | 60000000000   |
+| Duration::Hour            | `new Duration(1, Duration::Hour)`        | 3600000000000 |
 
 - **add(Duration)**: adds duration to `$d`
 

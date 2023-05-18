@@ -31,12 +31,12 @@ class Duration
     protected int $n;
 
     /**
-     * @param int $n
-     * @param int $unit
+     * @param float $n
+     * @param int $multiplier
      */
-    public function __construct(int $n = 0, int $unit = 1)
+    public function __construct($n = 0, int $multiplier = 1)
     {
-        $this->n = $n * $unit;
+        $this->n = intval($n * $multiplier);
     }
 
     /**

@@ -33,16 +33,46 @@ class DurationTest extends TestCase
         $d = new Duration(100);
         $this->assertEquals(100, $d->nanoseconds());
 
-        foreach ([
-            Duration::Nanosecond => 1001,
-            Duration::Microsecond => 1001000,
-            Duration::Millisecond => 1001000000,
-            Duration::Second => 1001000000000,
-            Duration::Minute => 60060000000000,
-            Duration::Hour => 3603600000000000,
-                 ] as $unit => $expected) {
-            $d = new Duration(1001, $unit);
-            $this->assertEquals($expected, $d->nanoseconds(), "expected {$expected} but got {$d->nanoseconds()}");
+        $cases = [
+            '1' => [
+                Duration::Nanosecond => 1,
+                Duration::Microsecond => 1000,
+                Duration::Millisecond => 1000000,
+                Duration::Second => 1000000000,
+                Duration::Minute => 60000000000,
+                Duration::Hour => 3600000000000,
+            ],
+            '2.5' => [
+                Duration::Nanosecond => 2,
+                Duration::Microsecond => 2500,
+                Duration::Millisecond => 2500000,
+                Duration::Second => 2500000000,
+                Duration::Minute => 150000000000,
+                Duration::Hour => 9000000000000,
+            ],
+            '533' => [
+                Duration::Nanosecond => 533,
+                Duration::Microsecond => 533000,
+                Duration::Millisecond => 533000000,
+                Duration::Second => 533000000000,
+                Duration::Minute => 31980000000000,
+                Duration::Hour => 1918800000000000,
+            ],
+            '1001' => [
+                Duration::Nanosecond => 1001,
+                Duration::Microsecond => 1001000,
+                Duration::Millisecond => 1001000000,
+                Duration::Second => 1001000000000,
+                Duration::Minute => 60060000000000,
+                Duration::Hour => 3603600000000000,
+            ],
+        ];
+
+        foreach ($cases as $n => $values) {
+            foreach ($values as $multiplier => $expected) {
+                $d = new Duration(floatval($n), $multiplier);
+                $this->assertEquals($expected, $d->nanoseconds(), "expected {$expected} but got {$d->nanoseconds()}");
+            }
         }
     }
 
